@@ -9,6 +9,31 @@
 <body>
   <div id="app"></div>
   <script>
+    // vue3
+    const data = {
+      name:'world'
+    }
+    const obj = new Proxy(data, {
+      get(target, key) {
+        console.log('触发get')
+        return target[key]
+        // 代理obj.xx取值方式
+      },
+      set(target, key, val){
+        // obj.xx = 'xxx' 修改时触发
+        console.log('触发set')
+        target[key] = val
+        render()
+      }
+    })
+    function render(){
+      document.querySelector('#app').innerHTML = `hello ${obj.name}!`
+    }
+    render()
+    setTimeout(() => {
+      obj.name = 'vue3'
+    }, 2000)
+
     // 目标 - 声明式
     // const obj = reactive({
     //   name: 'world'
